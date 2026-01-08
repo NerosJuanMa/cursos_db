@@ -1,149 +1,189 @@
-import pool from './config/db.js'; /** Ajusta tu import según tu configuración*/
- 
+import pool from './config/db.js'; // ajusta la ruta según tu proyecto
+
 async function crearBBDD() {
-// TABLA LIKES
-  await pool.query(`
-    CREATE TABLE IF NOT EXISTS likes (
-      id INT AUTO_INCREMENT PRIMARY KEY,
-      page_id VARCHAR(255) NOT NULL,
-      user_ip VARCHAR(45) NOT NULL,
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      UNIQUE (page_id, user_ip)
-    );
-  `);
-
-
-  // TABLA cursos
-  await pool.query(`
-    CREATE TABLE IF NOT EXISTS cursos (
-  id_curso int(11) NOT NULL,
-  id_especialidad int(11) DEFAULT NULL,
-  nombre_curso varchar(150) DEFAULT NULL,
-  fecha_realizacion varchar(50) DEFAULT NULL,
-  FechaCalculadaAño year(4) DEFAULT NULL,
-  practicas tinyint(1) DEFAULT NULL,
-  id_practicas int(11) DEFAULT NULL,
-  duracion_curso varchar(50) DEFAULT NULL,
-  conocimientos_adquiridos varchar(500) DEFAULT NULL,
-  Centro_Estudio varchar(50) DEFAULT NULL
-)
-  `);
- 
-  // TABLA apuntes
-  await pool.query(`
-    CREATE TABLE IF NOT EXISTS apuntes (
-        id_apunte int(11) NOT NULL,
-        id_curso int(11) DEFAULT NULL,
-        modulo varchar(10) DEFAULT NULL,
-        unidad_formativa varchar(10) DEFAULT NULL,
-        tema varchar(50) DEFAULT NULL,
-        pdf longblob DEFAULT NULL,
-        resumen text DEFAULT NULL
-    )
-  `);
- 
- // TABLA empresas
-  await pool.query(`
-    CREATE TABLE IF NOT EXISTS empresas (
-        id_empresa int(11) NOT NULL,
-        nombre varchar(50) DEFAULT NULL,
-        ubicacion varchar(50) DEFAULT NULL,
-        telefono int(11) DEFAULT NULL,
-        web varchar(50) DEFAULT NULL,
-        email varchar(50) DEFAULT NULL,
-        persona_contacto varchar(50) DEFAULT NULL,
-        mobil_contacto int(11) DEFAULT NULL
-    )
-  `);
- 
-// TABLA especialidad
-  await pool.query(`
-    CREATE TABLE IF NOT EXISTS especialidad (
-        id_especialidad int(11) NOT NULL,
-        nombre varchar(50) DEFAULT NULL,
-        familia varchar(50) DEFAULT NULL,
-        aplicaciones text DEFAULT NULL
-    )
-  `);
-
-// TABLA practicas
-  await pool.query(`
-    CREATE TABLE IF NOT EXISTS practicas (
-        id_practica int(11) NOT NULL,
-        id_empresa int(11) NOT NULL,
-        duracion varchar(10) DEFAULT NULL,
-        feed-back text DEFAULT NULL,
-        aptitudes_adquiridas text DEFAULT NULL,
-        observaciones text DEFAULT NULL
-    )   
-  `);
-
-  // TABLA usuarios
-  await pool.query(`
-    CREATE TABLE IF NOT EXISTS usuarios (
-  id_usuario int(10) UNSIGNED NOT NULL,
-  nombre varchar(150) NOT NULL,
-  email varchar(150) NOT NULL,
-  pasword varchar(50) NOT NULL,
-  fecha_nacimiento date NOT NULL,
-  activo tinyint(1) DEFAULT 1
-)    
-  `);
-
- 
-  console.log("✅ Base de datos creada correctamente");
-}
- 
-async function insertarDatosEjemplo() {
   try {
-    // PRODUCTOS DE EJEMPLO (solo 3 categorías)
+
+    // TABLA likes
     await pool.query(`
-      INSERT INTO productos (nombre, descripcion, precio, stock, categoria, imagen_url) VALUES
-      ('Camiseta Básica', 'Camiseta de algodón cómoda', 19.99, 50, 'Ropa', 'https://via.placeholder.com/300x300/4CAF50/FFFFFF?text=Camiseta'),
-      ('Pantalón Vaquero', 'Vaqueros clásicos azules', 49.99, 30, 'Ropa', 'https://via.placeholder.com/300x300/2196F3/FFFFFF?text=Pantalon'),
-      ('Zapatillas Sport', 'Zapatillas cómodas para deporte', 79.99, 25, 'Ropa', 'https://via.placeholder.com/300x300/FF9800/FFFFFF?text=Zapatillas'),
-      ('El Quijote', 'Clásico de la literatura española', 12.50, 20, 'Libros', 'https://via.placeholder.com/300x300/9C27B0/FFFFFF?text=Libro'),
-      ('Guía JavaScript', 'Manual para programadores', 35.99, 15, 'Libros', 'https://via.placeholder.com/300x300/3F51B5/FFFFFF?text=JS+Book'),
-      ('Smartphone Basic', 'Teléfono inteligente sencillo', 199.99, 10, 'Electrónica', 'https://via.placeholder.com/300x300/F44336/FFFFFF?text=Phone'),
-      ('Auriculares', 'Auriculares con buen sonido', 29.99, 40, 'Electrónica', 'https://via.placeholder.com/300x300/795548/FFFFFF?text=Audio')
+      CREATE TABLE IF NOT EXISTS likes (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        page_id VARCHAR(255) NOT NULL,
+        user_ip VARCHAR(45) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE KEY unique_like (page_id, user_ip)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     `);
- 
-    // USUARIOS DE PRUEBA (password '123456' hasheada)
+
+    // TABLA especialidad
     await pool.query(`
-      INSERT INTO clientes (nombre, email, password) VALUES
-      ('Juan Pérez', 'test@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMye.JfVK7fCQpNpCPq9QdoW6lQk1K6kMSO'),
-      ('Ana García', 'ana@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMye.JfVK7fCQpNpCPq9QdoW6lQk1K6kMSO'),
-      ('Carlos López', 'carlos@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMye.JfVK7fCQpNpCPq9QdoW6lQk1K6kMSO')
+      CREATE TABLE IF NOT EXISTS especialidad (
+        id_especialidad INT AUTO_INCREMENT PRIMARY KEY,
+        nombre VARCHAR(50) DEFAULT NULL,
+        familia VARCHAR(50) DEFAULT NULL,
+        aplicaciones TEXT DEFAULT NULL
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     `);
- 
-    // PEDIDOS DE EJEMPLO
+
+    // TABLA empresas
     await pool.query(`
-      INSERT INTO pedidos (cliente_id, estado, total) VALUES
-      (1, 'pendiente', 69.98),
-      (2, 'enviado', 45.48),
-      (1, 'entregado', 25.99)
+      CREATE TABLE IF NOT EXISTS empresas (
+        id_empresa INT AUTO_INCREMENT PRIMARY KEY,
+        nombre VARCHAR(50) DEFAULT NULL,
+        ubicacion VARCHAR(50) DEFAULT NULL,
+        telefono INT(11) DEFAULT NULL,
+        web VARCHAR(50) DEFAULT NULL,
+        email VARCHAR(50) DEFAULT NULL,
+        persona_contacto VARCHAR(50) DEFAULT NULL,
+        mobil_contacto INT(11) DEFAULT NULL
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     `);
- 
-    // DETALLE DE PEDIDOS
+
+    // TABLA practicas
     await pool.query(`
-      INSERT INTO pedidos_productos (pedido_id, producto_id, cantidad, precio_unitario) VALUES
-      (1, 1, 2, 19.99),
-      (1, 6, 1, 199.99),
-      (2, 4, 1, 12.50),
-      (2, 5, 1, 35.99),
-      (3, 3, 1, 79.99)
+      CREATE TABLE IF NOT EXISTS practicas (
+        id_practica INT AUTO_INCREMENT PRIMARY KEY,
+        id_empresa INT NOT NULL,
+        duracion VARCHAR(10) DEFAULT NULL,
+        feed_back TEXT DEFAULT NULL,
+        aptitudes_adquiridas TEXT DEFAULT NULL,
+        observaciones TEXT DEFAULT NULL,
+        CONSTRAINT fk_practicas_empresa
+          FOREIGN KEY (id_empresa)
+          REFERENCES empresas (id_empresa)
+          ON DELETE RESTRICT
+          ON UPDATE CASCADE
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     `);
- 
-    console.log("✅ Datos de ejemplo insertados correctamente");
+
+    // TABLA cursos
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS cursos (
+        id_curso INT AUTO_INCREMENT PRIMARY KEY,
+        id_especialidad INT DEFAULT NULL,
+        nombre_curso VARCHAR(150) DEFAULT NULL,
+        fecha_realizacion VARCHAR(50) DEFAULT NULL,
+        FechaCalculadaAño YEAR(4) DEFAULT NULL,
+        practicas TINYINT(1) DEFAULT NULL,
+        id_practicas INT DEFAULT NULL,
+        duracion_curso VARCHAR(50) DEFAULT NULL,
+        conocimientos_adquiridos VARCHAR(500) DEFAULT NULL,
+        Centro_Estudio VARCHAR(50) DEFAULT NULL,
+        CONSTRAINT fk_cursos_especialidad
+          FOREIGN KEY (id_especialidad)
+          REFERENCES especialidad (id_especialidad)
+          ON DELETE CASCADE
+          ON UPDATE CASCADE,
+        CONSTRAINT fk_cursos_practicas
+          FOREIGN KEY (id_practicas)
+          REFERENCES practicas (id_practica)
+          ON DELETE SET NULL
+          ON UPDATE CASCADE
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    `);
+
+    // TABLA apuntes
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS apuntes (
+        id_apunte INT AUTO_INCREMENT PRIMARY KEY,
+        id_curso INT DEFAULT NULL,
+        modulo VARCHAR(10) DEFAULT NULL,
+        unidad_formativa VARCHAR(10) DEFAULT NULL,
+        tema VARCHAR(50) DEFAULT NULL,
+        pdf LONGBLOB DEFAULT NULL,
+        resumen TEXT DEFAULT NULL,
+        CONSTRAINT fk_apuntes_curso
+          FOREIGN KEY (id_curso)
+          REFERENCES cursos (id_curso)
+          ON DELETE CASCADE
+          ON UPDATE CASCADE
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    `);
+
+    // TABLA usuarios
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS usuarios (
+        id_usuario INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        nombre VARCHAR(150) NOT NULL,
+        email VARCHAR(150) NOT NULL,
+        pasword VARCHAR(50) NOT NULL,
+        fecha_nacimiento DATE NOT NULL,
+        activo TINYINT(1) DEFAULT 1
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    `);
+
+    console.log('✅ Base de datos creada correctamente');
+
   } catch (error) {
-    console.error("❌ Error insertando datos:", error.message);
+    console.error('❌ Error creando la base de datos:', error.message);
   }
 }
- 
-// Ejecutar todo
+
+
+async function insertarDatosIniciales() {
+  try {
+
+    // ESPECIALIDAD
+    await pool.query(`
+      INSERT INTO especialidad (nombre, familia, aplicaciones) VALUES
+      ('5G', 'Informatica', NULL),
+      ('Ofimatica', 'Administracion', 'Escribir cartas, etc.'),
+      ('Tecnico Hardware', 'Informatica', NULL),
+      ('Diseño Gráfico', 'Diseño', NULL),
+      ('Empresa', 'Administracion', 'Creacion de empresa, tramites, decrechos y obligaciones');
+    `);
+
+    // EMPRESAS
+    await pool.query(`
+      INSERT INTO empresas (nombre, ubicacion, telefono, web, email, persona_contacto, mobil_contacto) VALUES
+      ('Laybet', 'Sevilla', NULL, NULL, NULL, 'Laybet Colmenares', NULL);
+    `);
+
+    // CURSOS
+    await pool.query(`
+      INSERT INTO cursos (
+        id_especialidad,
+        nombre_curso,
+        fecha_realizacion,
+        FechaCalculadaAño,
+        practicas,
+        id_practicas,
+        duracion_curso,
+        conocimientos_adquiridos,
+        Centro_Estudio
+      ) VALUES
+      (2, 'Técnico en Ofimática', 'JUL. 1999', 1999, 0, NULL, '184 horas', NULL, 'Instituto Informático Hispalense'),
+      (3, 'TÉCNICO EN EQUIPOS INFORMÁTICOS', 'JUN. 2001', 2001, 0, NULL, '171 horas', NULL, 'Instituto Informático Hispalense'),
+      (4, 'TECNICO AUXILIAR DE DISEÑO GRAFICO', 'OCT.03- MAY.04', 2004, 0, NULL, '630 horas.', 'Diseño gráfico, composición, reproducción gráfica, ilustración', 'B.C. PROYECTOS Y SISTEMAS DE CONTROL, S.C.'),
+      (4, 'DISEÑO DE PAGINAS WEB', 'ENE.- ABR. 2005', 2005, 0, NULL, '300 horas', 'Diseño multimedia', 'ACADEMIA E.A.I.G'),
+      (5, 'TRÁMITES DE CONSTITUCIÓN DEL EMPRESARIO INDIVIDUAL', 'JUN. 2005', 2005, 0, NULL, '8 horas', 'Pequeña empresa e iniciativa emprendedora', 'FUNDACIÓN FORJA XXI'),
+      (5, 'DERECHOS Y OBLIGACIONES, CONTROL DE INGRESOS Y GASTOS DEL EMPRESARIO INDIVIDUAL', 'JUN. 2005', 2005, 0, NULL, '6 horas', 'Pequeña empresa e iniciativa emprendedora', 'FUNDACIÓN FORJA XXI'),
+      (1, 'F.P.E. PROGRAMACION PARA SOLUCIONES DE IOT Y SMART CITY APLICABLES A ENTORNOS 5G, (IFCD97)', 'MAY. 2023 — JUN. 2023', 2023, 0, NULL, '150 horas.', 'Formación en tecnología 5G', 'VODAFONE ESPAÑA & INTEGRA CONOCIMIENT');
+    `);
+
+    // USUARIOS
+    await pool.query(`
+      INSERT INTO usuarios (nombre, email, pasword, fecha_nacimiento, activo) VALUES
+      ('admin', 'jmmudarra@gmail.com', '28640522w', '1979-04-09', 1),
+      ('invitado', 'invitado@example.es', '', '0000-00-00', 0);
+    `);
+
+    // LIKES
+    await pool.query(`
+      INSERT INTO likes (page_id, user_ip, created_at) VALUES
+      ('mi_pagina_unica', '::1', '2026-01-07 11:21:47');
+    `);
+
+    console.log('✅ Datos insertados correctamente');
+
+  } catch (error) {
+    console.error('❌ Error insertando datos:', error.message);
+  }
+}
+
+// Ejecutar script
+
 (async () => {
   await crearBBDD();
-  await insertarDatosEjemplo();
+  await insertarDatosIniciales();
+  process.exit(0);
 })();
- 
- 

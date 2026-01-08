@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gestión de Cursos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+  <h1>📚 Cursos & Formación</h1>
+
+  <div class="header-actions">
+    <button id="themeToggle" title="Cambiar tema">🌙</button>
+    <span class="like-container">
+      <span id="likeBtn">🤍</span>
+      <span id="likeCount">0</span>
+    </span>
+  </div>
+</header>
+
+<main>
+  <section class="form-section">
+    <h2>Nuevo / Editar curso</h2>
+
+    <form id="cursoForm">
+      <input type="hidden" id="cursoId">
+
+      <input type="text" id="nombre" placeholder="Nombre del curso" required />
+      <input type="text" id="fecha" placeholder="Fecha realización" />
+      <input type="number" id="anio" placeholder="Año" />
+      <input type="text" id="duracion" placeholder="Duración" />
+      <input type="text" id="centro" placeholder="Centro de estudio" />
+
+      <textarea id="conocimientos" placeholder="Conocimientos adquiridos"></textarea>
+
+      <button type="submit">💾 Guardar</button>
+    </form>
+  </section>
+
+  <section class="list-section">
+    <h2>Listado de cursos</h2>
+    <div id="cursosList" class="grid"></div>
+  </section>
+</main>
+
+<footer>
+  <span>© Formación profesional</span>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

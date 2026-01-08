@@ -1,8 +1,8 @@
 //routes/auth.routes.js
-import { Router } from 'express';
-import * as authController from '../controllers/auth.controllers.js';
+// import { Router } from 'express';
+// import * as authController from '../controllers/auth.controllers.js';
  
-const loginrouter = Router();
+// const loginrouter = Router();
  
 /**
  * ==========================================
@@ -10,11 +10,18 @@ const loginrouter = Router();
  * ==========================================
  */
  
-// Registrar usuario
-loginrouter.post('/register', authController.register);
+// // Registrar usuario
+// loginrouter.post('/register', authController.register);
  
-// Login usuario
-loginrouter.post('/login', authController.login);
+// // Login usuario
+// loginrouter.post('/login', authController.login);
  
-export default loginrouter;
+// export default loginrouter;
  
+
+import { Router } from 'express';
+import { AuthController } from '../controllers/auth.controller.js';
+
+const router = Router();
+router.post('/login', AuthController);
+export default router;

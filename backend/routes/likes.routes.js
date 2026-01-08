@@ -1,13 +1,9 @@
 import { Router } from 'express';
-import {
-  getStatus,
-  toggleLike
-} from '../controllers/likes.controller.js';
+import { getLikes, addLike } from '../controllers/likes.controller.js';
 
 const router = Router();
-
-router.get('/status', getStatus);
-router.post('/toggle', toggleLike);
+router.get('/', getLikes);
+router.post('/', addLike);
 
 export default router;
 
