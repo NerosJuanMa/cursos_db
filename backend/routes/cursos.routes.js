@@ -21,11 +21,11 @@ import { auth } from '../middleware/auth.middleware.js';
 
 const router = Router();
 
-router.get('/', CursosController);
-router.get('/:id', CursosController);
-router.post('/', auth, CursosController);
-router.put('/:id', auth, CursosController);
-router.delete('/:id', auth, CursosController);
+router.get('/', CursosController.getCursos);
+router.get('/:id', CursosController.getCurso);
+router.post('/', auth, CursosController.createCurso);
+router.put('/:id', auth, CursosController.updateCurso);
+router.delete('/:id', auth, CursosController.deleteCurso);
 
 export default router;
 

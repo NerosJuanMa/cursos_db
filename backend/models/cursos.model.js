@@ -15,14 +15,14 @@ import pool from '../config/db.js';
 
 export const CursosModel = {
 
-  async findAll() {
+  async getCursos() {
     const [rows] = await pool.query(
       'SELECT * FROM cursos ORDER BY id_curso DESC'
     );
     return rows;
   },
 
-  async findById(id) {
+  async getCurso(id) {
     const [[curso]] = await pool.query(
       'SELECT * FROM cursos WHERE id_curso = ?',
       [id]
@@ -30,7 +30,7 @@ export const CursosModel = {
     return curso;
   },
 
-  async create(data) {
+  async createCurso(data) {
     const [result] = await pool.query(
       'INSERT INTO cursos SET ?',
       data
@@ -38,14 +38,14 @@ export const CursosModel = {
     return result.insertId;
   },
 
-  async update(id, data) {
+  async updateCurso(id, data) {
     await pool.query(
       'UPDATE cursos SET ? WHERE id_curso = ?',
       [data, id]
     );
   },
 
-  async delete(id) {
+  async deleteCurso(id) {
     await pool.query(
       'DELETE FROM cursos WHERE id_curso = ?',
       [id]
