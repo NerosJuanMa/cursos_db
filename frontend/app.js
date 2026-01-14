@@ -39,8 +39,12 @@ async function cargarCursos() {
     div.className = 'card';
     div.innerHTML = `
       <h3>${c.nombre_curso}</h3>
+      <h3>${c.duracion_curso}</h3>
+      
       <p>${c.fecha_realizacion || ''}</p>
-      <small>${c.Centro_Estudio || ''}</small>
+      <small>${c.conocimientos_adquiridos || ''}</small>
+      <h5>${c.Centro_Estudio || ''}</h5>
+      <small>${c.id_especialidad}</small>
       <div class="card-actions">
         <button onclick="editar(${c.id_curso})">✏️</button>
         <button onclick="eliminar(${c.id_curso})">🗑️</button>
@@ -61,7 +65,9 @@ form.onsubmit = async e => {
     FechaCalculadaAño: anio.value,
     duracion_curso: duracion.value,
     Centro_Estudio: centro.value,
-    conocimientos_adquiridos: conocimientos.value
+    conocimientos_adquiridos: conocimientos.value,
+    practicas: practicas.value,
+    id_practicas: id_practicas.value
   };
 
   const method = id ? 'PUT' : 'POST';
@@ -89,6 +95,8 @@ window.editar = async id => {
   duracion.value = c.duracion_curso;
   centro.value = c.Centro_Estudio;
   conocimientos.value = c.conocimientos_adquiridos;
+  practicas.value = c.practicas;
+  id_practicas.value = c.id_practicas;
 };
 
 // 🗑️
