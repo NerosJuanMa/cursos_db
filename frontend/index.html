@@ -13,15 +13,7 @@
 <body>
 
 <header>
-  <!-- Seleccionador de color -->
-  <label for="color">Selecciona color: <br>
-  <input type="color" id="color" style="height: 50px; background-color: red; text-align: left;align-content: left;"/>
-  <!-- control deslizante (slider) -->
-  <br><input type="range" min="0" max="100">
- <!-- Barra de progreso -->
-  <br><progress max="100" value="70">70%</progress>
-  </label> 
-
+  
   <h1>📚 Cursos & Formación</h1>
 
   <div class="header-actions">
@@ -34,41 +26,9 @@
 </header>
 
 <main>
-  <!-- Area de texto con corrector de errores -->
-          <textarea spellcheck="true">
-          Aquí ai un error
-          </textarea>
-          <textarea lang="en" spellcheck="true">
-          Jere is some text widt some eror
-          </textarea>
+
   <section class="form-section">  
-    <label>
-    ¿Qué quieres comer?
-    <input list="elementos" />
-    </label>
-      <datalist id="elementos">
-      <option>Hamburguesa</option>
-      <option>Pizza</option>
-      <option>Tacos</option>
-      <option>Arepas</option>
-      </datalist>
-<!-- Solo imagenes -->
-<input type="file" accept="image/*" />
-<!-- Solo archivos .pdf -->
-<input type="file" accept=".pdf" />
-<!-- Multiples archivos -->
-<input type="file" multiple />
-
-<!-- Se muestra por que se solicita por Script -->
-<template>
-  <div class="card">
-    <h2>Producto</h2>
-    <p>20€</p>
-  </div>
-</template>
-
-<h1 class="centrado">Mi nombre es Freddy</h1>
-
+  
   <h2>Nuevo / Editar curso</h2>
 
     <form id="cursoForm">
@@ -92,13 +52,7 @@
     <h2>Listado de cursos</h2>
     <div id="cursosList" class="grid"></div>
   </section>
-  <picture>
-    <source
-    srcset="navidadGhiblli.jpg"
-    media="(min-width: 800px)">
-    <img src="fondoNegro.jpg" style="max-width: 100%;" />
-  </picture><br>
-  <img src="fondoNegro.jpg" loading="lazy" style="max-width: 100%;"/>
+  
 </main>
 
 <footer>
