@@ -109,3 +109,9 @@ window.eliminar = async id => {
 // Init
 cargarCursos();
 cargarLikes();
+
+
+//Mostrar Template
+const temp = document.querySelector('template')
+const newTemp = temp.content.cloneNode(true);
+document.body.appendChild(newTemp);
